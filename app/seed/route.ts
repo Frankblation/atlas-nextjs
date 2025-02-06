@@ -1,12 +1,8 @@
-import "dotenv/config"; // ✅ Ensures .env.local is loaded
 import bcrypt from "bcryptjs";
 import { db } from "@vercel/postgres";
 import { users, topics, questions } from "../../lib/placeholder-data";
 
-// ✅ Log to confirm DATABASE_URL is being read
-console.log("DATABASE_URL:", process.env.DATABASE_URL);
-
-const client = await db.connect(); // ✅ Now should properly read DATABASE_URL
+const client = await db.connect();
 
 async function seedUsers() {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
@@ -93,7 +89,6 @@ export async function GET() {
     return Response.json({ message: "Database seeded successfully" });
   } catch (error) {
     await client.sql`ROLLBACK`;
-    console.error("Database seeding failed:", error); // ✅ Log errors properly
-    return Response.json({ error: error.message }, { status: 500 });
+    return Response.json({ error }, { status: 500 });
   }
 }
