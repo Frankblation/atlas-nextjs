@@ -1,11 +1,8 @@
-export default async function Page({ params }: { params: { id?: string } }) {
-  console.log("Params received:", params);
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params; // 👈 Await it here!
+  console.log("Resolved Params:", resolvedParams);
 
-  if (!params || !params.id) {
-      return <div>Loading...</div>;
-  }
+  await new Promise((resolve) => setTimeout(resolve, 300)); // Simulating async work
 
-  await new Promise((resolve) => setTimeout(resolve, 300));
-
-  return <div>Topics Page: {params.id}</div>;
+  return <div>Topics Page: {resolvedParams.id}</div>;
 }
