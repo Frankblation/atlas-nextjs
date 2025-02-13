@@ -11,7 +11,7 @@ interface AnswerItemProps {
         <p>{answer.answer}</p>
         {!isAccepted && (
           <button
-            onClick={() => /* mark as accepted logic */}
+            onClick={() => questionId}
             className="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600"
           >
             ✅ Accept

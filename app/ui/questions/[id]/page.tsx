@@ -12,10 +12,10 @@ export default async function QuestionPage({ params }: { params: { id: string } 
       <h1 className="text-2xl font-bold">{question.title}</h1>
       <AnswerForm questionId={params.id} />
       <AnswerList
-        answers={answers}  // Pass the answers array
-        questionId={params.id}
-        acceptedAnswerId={question.answer_id}  // Pass the accepted answer ID
-      />
+              questionId={params.id} answer={{
+                  id: "",
+                  answer: ""
+              }} isAccepted={false}      />
     </div>
   );
 }
