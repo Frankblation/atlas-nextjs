@@ -77,3 +77,19 @@ export async function incrementVotes(id: string) {
     throw new Error("Failed to increment votes.");
   }
 }
+
+export async function fetchQuestion(id: string) {
+  const { rows } = await sql`
+    SELECT * FROM questions WHERE id = ${id}
+  `
+  return rows[0]
+}
+
+export async function fetchAnswers(questionId: string) {
+  const { rows } = await sql`
+    SELECT * FROM answers WHERE question_id = ${questionId}
+  `
+  return rows
+}
+
+
