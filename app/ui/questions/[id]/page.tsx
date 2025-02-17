@@ -16,30 +16,34 @@ export default async function QuestionPage({ params }: { params: { id: string } 
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">{question.title}</h1> {/* Fixed from question.text → question.title */}
+        <h1 className="text-2xl font-bold">{question.title}</h1>
         <LoggedInUser />
       </div>
 
-      {/* Fixed props passed to QuestionDetails */}
+      {/* Ensuring QuestionDetails receives correct props */}
       <QuestionDetails id={question.id} />
 
-      {/* Ensured question.topic_id exists before rendering AskQuestion */}
+      {/* Ensuring AskQuestion only renders if topic_id exists */}
       {question.topic_id && <AskQuestion topic={question.topic_id} />}
 
-      {/* Fixed props passed to AnswerList */}
+      {/* Answer form section */}
       <AnswerForm questionId={question.id} />
 
+      {/* Handling answer list correctly */}
       {answers.length > 0 ? (
-        answers.map((answer) => (
-          <AnswerList
-            key={answer.id}
-            answer={answer}  // Fixed from answers → answer
-            acceptedAnswerId={question.answer_id}
-          />
-        ))
+        <div>
+          {answers.map((answerItem) => (
+            <AnswerList
+              key={answerItem.id}
+              answers={answerItem}
+              questionId={question.id}
+              isAccepted={answer.id === acceptedAnswerId}  // Fixed isAccepted check
+            />
+          ))}
+        </div>
       ) : (
         <p className="text-gray-500">No answers yet.</p>
       )}
-    </div>
+    </div> // ✅ Closed div properly
   )
 }

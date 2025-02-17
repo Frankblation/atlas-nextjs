@@ -1,25 +1,31 @@
-// app/ui/questions/[id]/AnswerItem.tsx
-interface AnswerItemProps {
-    answer: { id: string; answer: string };
-    questionId: string;
-    isAccepted: boolean;
-  }
+import AnswerItem from "./AnswerItem";
 
-  const AnswerItem = ({ answer, questionId, isAccepted }: AnswerItemProps) => {
-    return (
-      <div className={`p-4 border rounded-lg flex justify-between ${isAccepted ? "bg-green-100" : ""}`}>
-        <p>{answer.answer}</p>
-        {!isAccepted && (
-          <button
-            onClick={() => questionId}
-            className="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600"
-          >
-            ✅ Accept
-          </button>
-        )}
-        {isAccepted && <span className="text-green-700 font-bold">Accepted ✅</span>}
-      </div>
-    );
-  };
+interface AnswerListProps {
+  answers: { id: string; answer: string; question_id: string }[];
+  questionId: string;
+  acceptedAnswerId: string | null;
+}
 
-  export default AnswerItem;
+const AnswerList = ({ answers, questionId, acceptedAnswerId }: AnswerListProps) => {
+  return (
+    <div className="mt-4 space-y-2">
+      {answers.length === 0 ? (
+        <p className="text-gray-500">No answers yet. Be the first to answer!</p>
+      ) : (
+        answers
+          .sort((a, b) => (a.id === acceptedAnswerId ? -1 : 1)) // Sort accepted answer first
+          .map((answer) => (
+            <AnswerItem
+              key={answer.id}
+              answer={answer}
+              questionId={questionId}
+              isAccepted={answer.id === acceptedAnswerId}
+            />
+          ))
+      )}
+    </div>
+  );
+};
+
+
+export default AnswerList;
