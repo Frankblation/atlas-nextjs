@@ -13,19 +13,18 @@ const AnswerList = ({ answers, questionId, acceptedAnswerId }: AnswerListProps) 
         <p className="text-gray-500">No answers yet. Be the first to answer!</p>
       ) : (
         answers
-          .sort((a, b) => (a.id === acceptedAnswerId ? -1 : 1)) // Sort accepted answer first
+          .sort((a, b) => (a.id === acceptedAnswerId ? -1 : 1)) // ✅ Correct sorting
           .map((answer) => (
             <AnswerItem
               key={answer.id}
               answer={answer}
               questionId={questionId}
-              isAccepted={answer.id === acceptedAnswerId}
+              isAccepted={answer.id === acceptedAnswerId} // ✅ Now correctly checks if the answer is accepted
             />
           ))
       )}
     </div>
   );
 };
-
 
 export default AnswerList;

@@ -35,9 +35,9 @@ export default async function QuestionPage({ params }: { params: { id: string } 
           {answers.map((answerItem) => (
             <AnswerList
               key={answerItem.id}
-              answers={answerItem}
+              answer={answerItem}
               questionId={question.id}
-              isAccepted={answer.id === acceptedAnswerId}  // Fixed isAccepted check
+              isAccepted={question.answer_id === answerItem.id} // Fixed isAccepted check
             />
           ))}
         </div>

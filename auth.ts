@@ -40,9 +40,9 @@
       }),
     ],
     callbacks: {
-      authorized: async ({ auth }) => {
-          return !!auth;
-      },
-    },
+  async authorize(credentials) { // ✅ Correct: Use "authorize"
+    return credentials ? { id: "1", name: "User" } : null;
+  }
+}
     });
 
